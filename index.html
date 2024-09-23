@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .post { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Blog Posts</h1>
+  <div id="posts"></div>
+
+  <script>
+    fetch('/posts')
+      .then(response => response.json())
+      .then(posts => {
+        const postsDiv = document.getElementById('posts');
+        posts.forEach(post => {
+          const postElement = document.createElement('div');
+          postElement.classList.add('post');
+          postElement.innerHTML = `
+            <h2>${post.title}</h2>
+            <p>${post.content}</p>
+            <small>Created at: ${new Date(post.created_at).toLocaleString()}</small>
+          `;
+          postsDiv.appendChild(postElement);
+        });
+      });
+  </script>
+</body>
+</html>
