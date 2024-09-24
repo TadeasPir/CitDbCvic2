@@ -1,7 +1,7 @@
 
 // Fetch and display posts
 function fetchPosts() {
-    fetch('/routes/posts.jsss')
+    fetch('/routes/posts.js')
         .then(response => response.json())
         .then(posts => {
             const postsDiv = document.getElementById('posts');
