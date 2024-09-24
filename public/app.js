@@ -1,5 +1,4 @@
-const postRoutes = require('./routes/posts');
-app.use(postRoutes);
+
 
 // Fetch and display posts
 function fetchPosts() {
