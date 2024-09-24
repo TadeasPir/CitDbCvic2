@@ -1,7 +1,9 @@
+const postRoutes = require('./routes/posts.js');
+app.use(postRoutes);
 
 // Fetch and display posts
 function fetchPosts() {
-    fetch('/routes/posts.js')
+    fetch('posts')
         .then(response => response.json())
         .then(posts => {
             const postsDiv = document.getElementById('posts');
