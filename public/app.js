@@ -9,7 +9,7 @@ function fetchPosts() {
             const postsDiv = document.getElementById('posts');
             postsDiv.innerHTML = '';  // Clear previous posts
             posts.forEach(post => {
-                const post = document.createElement('div');
+                const Element = document.createElement('div');
                 postElement.innerHTML = `
                     <h2>${post.title}</h2>
                     <p>${post.content}</p>
