@@ -47,7 +47,7 @@
         // Fetch notes from the backend
         async function fetchNotes() {
             try {
-                const response = await fetch('http://localhost:8080/notes');  // Updated to target localhost:8080
+                const response = await fetch('http://127.0.0.1:8080/notes');  // Updated to target localhost:8080
                 const notes = await response.json();
 
                 const notesList = document.getElementById('notes-list');
