@@ -37,5 +37,36 @@ export async function createNote(title, contents) {
   return result
 }
 
+export async function updateNote(id, title,contents) {
+
+  const [result] = await pool.query(`
+    UPDATE notes
+    SET title = ?,contents = ?
+    WHERE id = ?
+  `, [title,contents, id]);
+
+  if (result.affectedRows === 0) {
+    throw new Error('Note not found');
+  }
+
+  return result;
+}
+
+
+
+export async function deleteNote(id) {
+  const result = await pool.query(`
+    DELETE FROM notes
+    WHERE id = ?
+  `, [id]);
+
+  if (result[0].affectedRows === 0) {
+    throw new Error('Note not found');
+  }
+
+
+  return result[0].affectedRows;
+}
+
 
 
