@@ -55,7 +55,7 @@
     <table>
         <thead>
             <tr>
-                <th>created</th>
+                <th>ID</th>
                 <th>Title</th>
                 <th>Content</th>
             </tr>
@@ -65,45 +65,37 @@
         </tbody>
     </table>
 
+    <div id="blog-posts" class="loading">Loading...</div>
+
     <script>
-        // Fetch notes from the backend
-        async function fetchNotes() {
-            try {
-                const response = await fetch('localhost:8080/apiV2/blog');  // Updated to target localhost:8080
-                const notes = await response.json();
+        const blogContainer = document.getElementById('blog-posts');
 
-                const notesList = document.getElementById('notes-list');
+        fetch('http://3.120.141.144:8000/api/blog/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                blogContainer.innerHTML = ''; // Clear the loading message
+                data.forEach(post => {
+                    const postElement = document.createElement('div');
+                    postElement.classList.add('post');
 
-                // Clear any previous content
-                notesList.innerHTML = '';
+                    postElement.innerHTML = `
+                        <h2>${post.title}</h2>
+                        <p>${post.content}</p>
+                        <p><strong>Author:</strong> ${post.author}</p>
+                    `;
 
-                // Populate table with notes
-                notes.forEach(note => {
-                    const row = document.createElement('tr');
-
-                    const idCell = document.createElement('td');
-                    idCell.textContent = note.created;
-                    row.appendChild(idCell);
-
-                    const titleCell = document.createElement('td');
-                    titleCell.textContent = note.title;
-                    row.appendChild(titleCell);
-
-                    const contentCell = document.createElement('td');
-                    contentCell.textContent = note.contents;
-                    row.appendChild(contentCell);
-
-                    notesList.appendChild(row);
+                    blogContainer.appendChild(postElement);
                 });
-            } catch (error) {
-                console.error("Error fetching notes:", error);
-            }
-        }
-
-        // Call the function when the page loads
-        window.onload = fetchNotes;
+            })
+            .catch(error => {
+                blogContainer.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            });
     </script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
